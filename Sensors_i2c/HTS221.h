@@ -18,6 +18,8 @@
 #define 	HTS221_WHO_AM_I_VALUE		0xBC
 #define 	HTS221_WHO_AM_I_ADDRESS		0x0F
 
+#define 	HTS221_CTRL1				0x20
+
 #define 	HTS221_HUMIDITY_OUT_L 		0x28
 #define 	HTS221_HUMIDITY_OUT_H 		0x29
 
