@@ -1,0 +1,16 @@
+stm32f3xx_ll_i2c.h:644:22:LL_I2C_EnableClockStretching	1
+stm32f3xx_ll_i2c.h:764:22:LL_I2C_DisableGeneralCall	1
+stm32f3xx_ll_i2c.h:875:22:LL_I2C_SetOwnAddress2	1
+stm32f3xx_ll_i2c.h:897:22:LL_I2C_DisableOwnAddress2	1
+stm32f3xx_ll_i2c.h:1320:22:LL_I2C_EnableIT_RX	1
+stm32f3xx_ll_i2c.h:1331:22:LL_I2C_DisableIT_RX	1
+stm32f3xx_ll_i2c.h:1565:26:LL_I2C_IsActiveFlag_TXIS	2
+stm32f3xx_ll_i2c.h:1617:26:LL_I2C_IsActiveFlag_STOP	2
+stm32f3xx_ll_i2c.h:1774:22:LL_I2C_ClearFlag_STOP	1
+stm32f3xx_ll_i2c.h:1879:22:LL_I2C_EnableAutoEndMode	1
+stm32f3xx_ll_i2c.h:2133:22:LL_I2C_HandleTransfer	1
+stm32f3xx_ll_i2c.h:2230:22:LL_I2C_TransmitData8	1
+stm32f3xx_ll_bus.h:285:22:LL_AHB1_GRP1_EnableClock	1
+stm32f3xx_ll_bus.h:535:22:LL_APB1_GRP1_EnableClock	1
+i2c.c:29:6:MX_I2C1_Init	1
+i2c.c:82:10:i2c_master_read	6
