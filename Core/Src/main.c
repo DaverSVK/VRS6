@@ -50,8 +50,7 @@
 float temperature;
 float humidity;
 float pressure;
-float refference_pressure = 1013.25;
-int use_real_distance = 1;
+float refference_pressure;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -110,15 +109,18 @@ int main(void)
   LPS25HB_init();
 
 
-  	const uint8_t tx_message[] = "%.1f, %.1f, %.1f \r\n";
+  	const uint8_t tx_message[] = "%.1f, %.1f, %.1f, %.1f \r\n";
   	uint8_t tx_data[120];
-
+  	LL_mDelay(500);
+  	LPS25HB_get_pressure(&pressure);
+  	refference_pressure = LPS25HB_get_pressure(&pressure);
   	while (1) {
 
   		HTS221_get_temperature(&temperature);
   		HTS221_get_humidity(&humidity);
   		LPS25HB_get_pressure(&pressure);
-  	    uint8_t tx_data_len = (uint8_t)sprintf((char*)tx_data, (char*)tx_message, temperature, humidity, pressure);
+  		float alt = (float)44330.00 * (1-pow(pressure/refference_pressure,1/5.255));
+  	    uint8_t tx_data_len = (uint8_t)sprintf((char*)tx_data, (char*)tx_message, temperature, humidity, alt, pressure);
   	    USART2_PutBuffer(tx_data, tx_data_len);
   	    LL_mDelay(500);
   	}
