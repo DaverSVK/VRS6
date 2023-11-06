@@ -1,4 +1,4 @@
-//* USER CODE BEGIN Header */
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    i2c.c
@@ -83,6 +83,24 @@ void MX_I2C1_Init(void)
 }
 
 /* USER CODE BEGIN 1 */
+void i2c_master_write_multi(uint8_t* data, size_t length, uint8_t register_addr, uint8_t slave_addr, uint8_t read_flag) {
+    if (read_flag) {
+        register_addr |= (1 << 7);
+    }
+    LL_I2C_HandleTransfer(I2C1, slave_addr, LL_I2C_ADDRSLAVE_7BIT, 1 + length, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
+    LL_I2C_TransmitData8(I2C1, register_addr);
+
+    size_t dataIndex = 0;
+    while (!LL_I2C_IsActiveFlag_STOP(I2C1)) {
+        if (LL_I2C_IsActiveFlag_TXIS(I2C1)) {
+            if (dataIndex < length) {
+                LL_I2C_TransmitData8(I2C1, data[dataIndex++]);
+            }
+        }
+    }
+    LL_I2C_ClearFlag_STOP(I2C1);
+}
+
 uint8_t* i2c_master_read(uint8_t *buffer, uint8_t length, uint8_t register_addr,
 		uint8_t slave_addr, uint8_t read_flag) {
 	aReceiveBuffer_read = buffer;
@@ -92,7 +110,7 @@ uint8_t* i2c_master_read(uint8_t *buffer, uint8_t length, uint8_t register_addr,
 	end_of_read_flag = 0;
 	LL_I2C_EnableIT_RX(I2C1);
 
-	//Read request
+	//poziadam slejva o citanie z jeho registra
 	LL_I2C_HandleTransfer(I2C1, slave_addr, LL_I2C_ADDRSLAVE_7BIT, 1,
 			LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
 	while (!LL_I2C_IsActiveFlag_STOP(I2C1)) {
@@ -103,7 +121,7 @@ uint8_t* i2c_master_read(uint8_t *buffer, uint8_t length, uint8_t register_addr,
 	LL_I2C_ClearFlag_STOP(I2C1);
 	while (LL_I2C_IsActiveFlag_STOP(I2C1)) {
 	}
-	//Read from slave
+	//citam register od slejva
 	LL_I2C_HandleTransfer(I2C1, slave_addr, LL_I2C_ADDRSLAVE_7BIT, length,
 			LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);
 	while (!LL_I2C_IsActiveFlag_STOP(I2C1)) {
@@ -118,5 +136,9 @@ uint8_t* i2c_master_read(uint8_t *buffer, uint8_t length, uint8_t register_addr,
 
 	return aReceiveBuffer_read;
 }
-
+void I2C1_Master_Reception_Callback(void) {
+	aReceiveBuffer_read[ubReceiveIndex++] = LL_I2C_ReceiveData8(I2C1);
+			(ubReceiveIndex > 19) ? ubReceiveIndex = 0 : ubReceiveIndex;
+			end_of_read_flag = 0;
+}
 /* USER CODE END 1 */

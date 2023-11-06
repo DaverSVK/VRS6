@@ -42,4 +42,10 @@ void HTS221_read_bytes(uint8_t reg_addr, uint8_t* values, size_t length);
 void HTS221_write_byte(uint8_t reg_addr, uint8_t value);
 void HTS221_init(void);
 
+void HTS221_get_humidity_calibration(void);
+void HTS221_get_humidity(float* humidity_out);
+
+void HTS221_get_temperature_calibration(void);
+void HTS221_get_temperature(float* temperature_out);
+
 #endif /* HTS221_H_ */

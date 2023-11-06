@@ -45,7 +45,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+float temperature;
+float humidity;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -90,9 +91,10 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  MX_DMA_Init();
   MX_GPIO_Init();
-  MX_USART2_UART_Init();
   MX_I2C1_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
   HTS221_init();
@@ -102,10 +104,16 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  const uint8_t tx_message[] = "%.1f C, %.1f";
+    	uint8_t tx_data[120];
   while (1)
   {
     /* USER CODE END WHILE */
-
+		HTS221_get_temperature(&temperature);
+		HTS221_get_humidity(&humidity);
+		uint8_t tx_data_len = (uint8_t)sprintf((char*)tx_data, (char*)tx_message, temperature, humidity);
+		USART2_PutBuffer(tx_data, tx_data_len);
+		LL_mDelay(500);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
