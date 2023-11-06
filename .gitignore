@@ -1,5 +1,5 @@
 
 #ignore settings folder
-/.serttings
+/.settings
 #ignore Debug folder
 /Debug

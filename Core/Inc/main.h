@@ -28,6 +28,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 
+#include "stm32f3xx_ll_dma.h"
 #include "stm32f3xx_ll_i2c.h"
 #include "stm32f3xx_ll_rcc.h"
 #include "stm32f3xx_ll_bus.h"
@@ -36,11 +37,8 @@ extern "C" {
 #include "stm32f3xx_ll_cortex.h"
 #include "stm32f3xx_ll_utils.h"
 #include "stm32f3xx_ll_pwr.h"
-#include "stm32f3xx_ll_dma.h"
 #include "stm32f3xx_ll_usart.h"
 #include "stm32f3xx_ll_gpio.h"
-
-
 
 #if defined(USE_FULL_ASSERT)
 #include "stm32_assert.h"
@@ -71,20 +69,6 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
-/* USER CODE END EFP */
-
-/* Private defines -----------------------------------------------------------*/
-#define MCO_Pin LL_GPIO_PIN_0
-#define MCO_GPIO_Port GPIOF
-#define VCP_TX_Pin LL_GPIO_PIN_2
-#define VCP_TX_GPIO_Port GPIOA
-#define SWDIO_Pin LL_GPIO_PIN_13
-#define SWDIO_GPIO_Port GPIOA
-#define SWCLK_Pin LL_GPIO_PIN_14
-#define SWCLK_GPIO_Port GPIOA
-#define VCP_RX_Pin LL_GPIO_PIN_15
-#define VCP_RX_GPIO_Port GPIOA
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
                                                                  4 bits for subpriority */
@@ -98,7 +82,9 @@ void Error_Handler(void);
                                                                  0 bit  for subpriority */
 #endif
 
-/* USER CODE BEGIN Private defines */
+/* USER CODE END EFP */
+
+/* Private defines -----------------------------------------------------------*/
 
 /* USER CODE END Private defines */
 
