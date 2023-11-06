@@ -111,9 +111,8 @@ int main(void)
 
   	const uint8_t tx_message[] = "%.1f, %.1f, %.1f, %.1f \r\n";
   	uint8_t tx_data[120];
-  	LL_mDelay(500);
-  	LPS25HB_get_pressure(&pressure);
-  	refference_pressure = LPS25HB_get_pressure(&pressure);
+  	LL_mDelay(10);
+  	LPS25HB_get_pressure(&refference_pressure);
   	while (1) {
 
   		HTS221_get_temperature(&temperature);
