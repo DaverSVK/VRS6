@@ -9,6 +9,7 @@
 #ifndef LPS25HB_H_
 #define LPS25HB_H_
 
+#define 	LPS25HB_DEVICE_ADDRESS_0		0xB8
 #define 	LPS25HB_DEVICE_ADDRESS_1		0xBA
 
 #define 	LPS25HB_WHO_AM_I_VALUE			0xBD
@@ -23,6 +24,8 @@
 #define		LPS25HB_ADDRESS_RPDS_L			0x39
 #define		LPS25HB_ADDRESS_RPDS_H			0x3A
 
-uint8_t LPS25HB_Who_Am_I(uint8_t reg_addr);
+void LPS25HB_read_byte(uint8_t reg_addr);
+void LPS25HB_write_byte(uint8_t reg_addr, uint8_t value);
+void LPS25HB_init(void);
 
 #endif /* LPS25HB_H_ */

@@ -1,4 +1,4 @@
-/* USER CODE BEGIN Header */
+//* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    i2c.c
@@ -53,6 +53,10 @@ void MX_I2C1_Init(void)
   /* Peripheral clock enable */
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_I2C1);
 
+  /* I2C1 interrupt Init */
+  NVIC_SetPriority(I2C1_EV_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+  NVIC_EnableIRQ(I2C1_EV_IRQn);
+
   /* USER CODE BEGIN I2C1_Init 1 */
 
   /* USER CODE END I2C1_Init 1 */
@@ -88,7 +92,7 @@ uint8_t* i2c_master_read(uint8_t *buffer, uint8_t length, uint8_t register_addr,
 	end_of_read_flag = 0;
 	LL_I2C_EnableIT_RX(I2C1);
 
-	//poziadam slejva o citanie z jeho registra
+	//Read request
 	LL_I2C_HandleTransfer(I2C1, slave_addr, LL_I2C_ADDRSLAVE_7BIT, 1,
 			LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
 	while (!LL_I2C_IsActiveFlag_STOP(I2C1)) {
@@ -99,7 +103,7 @@ uint8_t* i2c_master_read(uint8_t *buffer, uint8_t length, uint8_t register_addr,
 	LL_I2C_ClearFlag_STOP(I2C1);
 	while (LL_I2C_IsActiveFlag_STOP(I2C1)) {
 	}
-	//citam register od slejva
+	//Read from slave
 	LL_I2C_HandleTransfer(I2C1, slave_addr, LL_I2C_ADDRSLAVE_7BIT, length,
 			LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);
 	while (!LL_I2C_IsActiveFlag_STOP(I2C1)) {
@@ -114,4 +118,5 @@ uint8_t* i2c_master_read(uint8_t *buffer, uint8_t length, uint8_t register_addr,
 
 	return aReceiveBuffer_read;
 }
+
 /* USER CODE END 1 */

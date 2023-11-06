@@ -79,7 +79,7 @@ int main(void)
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /* USER CODE BEGIN Init */
-
+  NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -94,6 +94,9 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+
+  HTS221_init();
+  LPS25HB_init();
 
   /* USER CODE END 2 */
 
