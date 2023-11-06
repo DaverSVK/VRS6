@@ -1,2 +1,0 @@
-stm32f3xx_ll_bus.h:285:22:LL_AHB1_GRP1_EnableClock	1
-gpio.c:42:6:MX_GPIO_Init	1
