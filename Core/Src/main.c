@@ -109,7 +109,7 @@ int main(void)
   LPS25HB_init();
 
 
-  	const uint8_t tx_message[] = "%.1f, %.1f, %.1f, %.1f \r\n";
+  	const uint8_t tx_message[] = "%2.1f, %.0f, %.2f, %.2f \r\n";
   	uint8_t tx_data[120];
   	LL_mDelay(10);
   	LPS25HB_get_pressure(&refference_pressure);
